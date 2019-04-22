@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences loginPreferences;
     SharedPreferences.Editor loginPreferencesEditor;
 
+    boolean isLoggedIn = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +30,17 @@ public class MainActivity extends AppCompatActivity {
         passwordText = findViewById(R.id.activity_main_password);
         loginBtn = findViewById(R.id.activity_main_login_button);
 
-        loginPreferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
-        loginPreferencesEditor = loginPreferences.edit();
-
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginPreferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
+                loginPreferencesEditor = loginPreferences.edit();
                 if(!usernameText.getText().toString().isEmpty() && !passwordText.getText().toString().isEmpty()){
                     if(testCredentials(usernameText.getText().toString(), passwordText.getText().toString())){
+                        isLoggedIn = true;
                         loginPreferencesEditor.putString("username", usernameText.getText().toString());
                         loginPreferencesEditor.putString("password", passwordText.getText().toString());
+                        loginPreferencesEditor.putBoolean("isLoggedIn", isLoggedIn);
                         loginPreferencesEditor.commit();
                         completeLoginActivity();
                     }
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean testCredentials(String username, String password){
-        if(username == "admin" && password == "admin"){
+        if(username.equals("admin") && password.equals("admin")){
             return true;
         }
         return false;

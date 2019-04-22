@@ -20,6 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="25dp"/>
+        android:layout_marginBottom="25dp"
+        android:id="@+id/activity_test_shared_preferences_logout_btn"/>
 
 </android.support.constraint.ConstraintLayout>

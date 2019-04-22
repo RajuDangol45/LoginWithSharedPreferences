@@ -22,9 +22,10 @@ public class TestSharedPreferences extends AppCompatActivity {
         setContentView(R.layout.activity_test_shared_preferences);
 
         usernameText = findViewById(R.id.test_shared_preferences_username);
+        logoutBtn = findViewById(R.id.activity_test_shared_preferences_logout_btn);
         loginPreferences = getSharedPreferences("credentials", Context.MODE_PRIVATE);
 
-        if(loginPreferences.contains("username")) {
+        if(loginPreferences.getBoolean("isLoggedIn", false)) {
             username = loginPreferences.getString("username", "Dummy username");
             usernameText.setText(username);
         }
@@ -35,8 +36,7 @@ public class TestSharedPreferences extends AppCompatActivity {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginPreferences.getAll().clear();
-                loginPreferences.edit().commit();
+                loginPreferences.edit().clear().commit();
                 startLoginActivity();
             }
         });
